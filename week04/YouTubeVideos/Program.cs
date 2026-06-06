@@ -21,11 +21,17 @@ class Program
         video1.AddComment(comment1);
         Comment comment2 = new Comment("I think it could have better graphics", "r0x4nn33");
         video1.AddComment(comment2);
+        Comment comment3 = new Comment("This Pokemon game is quite addictive", "pikapower");
+        video1.AddComment(comment3);
         videosList.Add(video1);
 
         Video video2 = new Video(t2, author2, 1000);
         Comment comment1B = new Comment("I prefer this one to Pokemon Legends Z-A", "cassaNdra2");
         video2.AddComment(comment1B);
+        Comment comment2B = new Comment("It is a Breath of the Wild for Pokemon!", "newUser0P");
+        video2.AddComment(comment2B);
+        Comment comment3B = new Comment("Achei o jogo legal, mas tem problemas com os graficos", "brPlayer");
+        video2.AddComment(comment3B);
         videosList.Add(video2);
 
         Video video3 = new Video(t3,author3, 1989);

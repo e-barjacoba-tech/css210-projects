@@ -19,14 +19,16 @@ public class Video
     {
         _commentList.Add(comment);
     }
+
+    //I added the CommentaryCount method
+    public int CommentaryCount()
+    {
+        return _commentList.Count();
+    }
     public string DisplayDetails()
     {
         string details = $"{_title}: by {_author} ({_length} seconds long)\n";
-        details += $"It has {_commentList.Count()} comments\n";
-
-        //After a while, I decided not to include a method to get the comment count
-        //I used _commentList.Count() instead because it is more direct and efficient
-
+        details += $"It has {CommentaryCount()} comments\n";
         foreach (Comment comment in _commentList)
         {
             details += $"{comment.DisplayComment()}\n";
