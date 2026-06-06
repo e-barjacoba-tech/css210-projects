@@ -25,6 +25,6 @@ public class Product
 
     public string ProductDetails()
     {
-        return $"{_productID}: {_productName}";
+        return $"{_productID}: {_productName} ({_quantity} items of this product)";
     }
 }

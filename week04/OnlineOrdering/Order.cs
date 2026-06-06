@@ -13,11 +13,6 @@ public class Order
         _productList = products;
     }
 
-    public void AddProdcut(Product product)
-    {
-        _productList.Add(product);
-    }
-
     public decimal GetTotalCost()
     {
         decimal cost = 0;
