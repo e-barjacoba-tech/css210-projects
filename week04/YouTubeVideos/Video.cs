@@ -6,7 +6,7 @@ public class Video
     private string _title;
     private string _author;
     private int _length;
-    private List<Comment> _commentList;
+    private List<Comment> _commentList = new List<Comment>();
 
     public Video (string title, string author, int lenght)
     {
@@ -19,9 +19,19 @@ public class Video
     {
         _commentList.Add(comment);
     }
-
     public string DisplayDetails()
     {
-        return "";
+        string details = $"{_title}: by {_author} ({_length} seconds long)\n";
+        details += $"It has {_commentList.Count()} comments\n";
+
+        //After a while, I decided not to include a method to get the comment count
+        //I used _commentList.Count() instead because it is more direct and efficient
+
+        foreach (Comment comment in _commentList)
+        {
+            details += $"{comment.DisplayComment()}\n";
+        }
+
+        return details;
     }
 }

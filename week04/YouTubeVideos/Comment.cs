@@ -14,7 +14,7 @@ public class Comment
 
     public string DisplayComment()
     {
-        return "";
+        return $"{_username} made this comment: {_comment}";
     }
 
 }
