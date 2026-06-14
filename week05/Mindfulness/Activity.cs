@@ -25,7 +25,7 @@ public class Activity
     
     public void DisplayEndingMessage()
     {
-        Console.WriteLine($"Thank you so much for completing the {_name} activity for the last {_duration}\n");
+        Console.WriteLine($"Thank you so much for completing the {_name} activity for the last {_duration}I \n");
         Console.WriteLine($"We hope to see you soon!");
     }
 
