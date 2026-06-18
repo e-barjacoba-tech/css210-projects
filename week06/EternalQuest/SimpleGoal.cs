@@ -9,14 +9,19 @@ public class SimpleGoal : Goal
         _isComplete = isComplete;
     }
 
-    public override void RecordEvent()
+    public override int RecordEvent()
     {
-        
+        if (IsComplete() == false)
+        {
+            _isComplete = true;
+            return _points;
+        }
+        return 0;
     }
     
     public override bool IsComplete()
     {
-        return false;
+       return _isComplete;
     }
 
     public override string GetStringRepresentation()

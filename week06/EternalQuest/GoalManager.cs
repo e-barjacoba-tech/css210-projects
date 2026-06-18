@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization;
@@ -64,23 +65,29 @@ public class GoalManager
 
     public void DisplayPlayerInfo()
     {
-        
+        Console.WriteLine($"You have {_score} points in general");
     }
 
     public void ListGoalNames()
     {
-        int i = 0;
+        int i = 1;
 
         foreach (Goal goal in _goals)
         {
-            Console.WriteLine($"  {i}. {goal}");
+            Console.WriteLine($"  {i}. {goal.GetName()}");
             i++;
         }
     }
 
     public void ListGoalDetails()
     {
-        
+        int i = 1;
+
+        foreach (Goal goal in _goals)
+        {
+            Console.WriteLine($"  {i}. {goal.GetDetailsString()}");
+            i++;
+        }
     }
 
     public void CreateGoal()
@@ -108,6 +115,7 @@ public class GoalManager
 
             SimpleGoal simpleGoal = new SimpleGoal (name, description, points, false);
             _goals.Add(simpleGoal);
+            DisplayPlayerInfo();
 
         }
         else if (answerGoal == 2)
@@ -121,6 +129,7 @@ public class GoalManager
 
             EternalGoal eternalGoal = new EternalGoal (name, description, points);
             _goals.Add(eternalGoal);
+            DisplayPlayerInfo();
         }
         else if (answerGoal == 3)
         {
@@ -137,26 +146,72 @@ public class GoalManager
 
             ChecklistGoal checklistGoal = new ChecklistGoal (name, description, points, target, bonus);
             _goals.Add(checklistGoal);
+            DisplayPlayerInfo();
+        }
+        else
+        {
+            Console.WriteLine("You'll go back to the main menu. Next time, type a valid answer (1 through 3)");
         }
     }
 
     public void RecordEvent()
     {
-        
+        Console.WriteLine("Choose a goal from this list");
+        ListGoalNames();
+        Console.Write("Which one do you choose (pick a number): ");
+        int goalNumberOnList = int.Parse(Console.ReadLine());
+
+        goalNumberOnList -= 1;
+        int earnedPoint = _goals[goalNumberOnList].RecordEvent();
+        _score += earnedPoint;
+
+        Console.WriteLine($"You earned {earnedPoint}");
+        Console.WriteLine($"Total score: {_score}");
     }
 
     public void SaveGoals()
     {
-        string filename = "goals.txt";
+        Console.Write("What is the name of the goal file? ");
+        string filename = Console.ReadLine();
         
         using (StreamWriter outputFile = new StreamWriter(filename))
         {
-            outputFile.WriteLine();
+            outputFile.WriteLine(_score);
+            foreach (Goal goal in _goals)
+            {
+                string representation = goal.GetStringRepresentation();
+                outputFile.WriteLine(representation);
+            }
         }
     }
     
     public void LoadGoals()
     {
+        Console.Write("What is the name of the goal file? ");
+        string filename = Console.ReadLine();
+        string[] lines = System.IO.File.ReadAllLines(filename);
         
+        _score = int.Parse(lines[0]);
+
+        foreach (string line in lines.Skip(1)) //similar to Next() in Pyhton, it skips the first line
+        {
+            string[] type = line.Split(":");
+            string[] parts = type[1].Split(",");
+            if (type[0] == "SimpleGoal")
+            {
+                SimpleGoal simpleGoal = new SimpleGoal(parts[0],parts[1],int.Parse(parts[2]),bool.Parse(parts[3]));
+                _goals.Add(simpleGoal);
+            }
+            else if (type[0] == "EternalGoal")
+            {
+                EternalGoal eternalGoal = new EternalGoal(parts[0],parts[1],int.Parse(parts[2]));
+                _goals.Add(eternalGoal);
+            }
+            else if (type[0] == "ChecklistGoal")
+            {
+                ChecklistGoal checklistGoal = new ChecklistGoal(parts[0],parts[1],int.Parse(parts[2]),int.Parse(parts[3]),int.Parse(parts[4]));
+                _goals.Add(checklistGoal);
+            }
+        }
     }
 }

@@ -12,24 +12,46 @@ public class ChecklistGoal : Goal
         _target = target;
     }
 
-    public override void RecordEvent()
+    public override int RecordEvent()
     {
-        throw new NotImplementedException();
+        if(IsComplete())
+        {
+            _points += _bonus;
+            return _points;
+        }
+        else 
+        {
+            _amountCompleted += 1;
+            return _points;
+        }
     }
 
     public override bool IsComplete()
     {
-        throw new NotImplementedException();
+       if (_amountCompleted == _target)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public override string GetDetailsString()
     {
-        return base.GetDetailsString();
+        string details = $"[ ] {_shortName} ({_description}) -- Currently completed {_amountCompleted}/{_target}";
+        if (IsComplete())
+        {
+            details =  $"[X] {_shortName} ({_description}) -- Currently completed {_amountCompleted}/{_target}";
+        }
+        return details;
     }
 
     public override string GetStringRepresentation()
     {
-        return "";
+        string representation = $"ChecklistGoal:{_shortName},{_description},{_points},{_bonus},{_target},{_amountCompleted}";
+        return representation;
 
     }
 }

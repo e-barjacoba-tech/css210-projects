@@ -8,19 +8,20 @@ public class EternalGoal : Goal
         
     }
 
-    public override void RecordEvent()
+    public override int RecordEvent()
     {
-        throw new NotImplementedException();
+        return _points;
     }
 
     public override bool IsComplete()
     {
-        throw new NotImplementedException();
+        return false;
     }
 
     public override string GetStringRepresentation()
     {
-        throw new NotImplementedException();
+        string representation = $"EternalGoal:{_shortName},{_description},{_points}";
+        return representation;
     }
 
 }
