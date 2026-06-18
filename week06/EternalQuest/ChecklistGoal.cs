@@ -29,6 +29,7 @@ public class ChecklistGoal : Goal
 
     public override string GetStringRepresentation()
     {
-        throw new NotImplementedException();
+        return "";
+
     }
 }
